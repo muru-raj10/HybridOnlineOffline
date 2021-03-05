@@ -24,12 +24,11 @@ trainloader_all = DataLoader(dataset, len(Normalized_training_df), shuffle=True,
 testloader = DataLoader(testset, len(Normalized_testing_df), shuffle=False, num_workers=1)
 """
 
-batchsize = 500
-dim = len(features)
-print(dim)
+batchsize = ????
+dim = ???
 latent_dim = int(np.round(1+np.sqrt(dim)))
-first_layer = 40
-second_layer = 20
+first_layer = ???
+second_layer = ???
 
 class AE(nn.Module):
     def __init__(self):
@@ -94,7 +93,6 @@ def train(epoch):
           epoch, train_loss / len(trainloader.dataset)))
     training_losses.append(train_loss / len(trainloader))
 
-torch.manual_seed(2)
 
 t0 = time.time()
 for epoch in range(1, 200 + 1):
@@ -112,7 +110,7 @@ def select_data_online_ocsvm(ocsvm_df,ocsvm,df_for_online):
     new_ocsvm_df = pd.concat([support_vec,df_for_online]).reset_index(drop=True)
     return new_ocsvm_df
 
-def Select_scores(tr_scores,per = 85):
+def select_scores(tr_scores,per = 85):
     iqr = stats.iqr(tr_scores)
     lq = 0
     uq = np.percentile(tr_scores,per) + 0*iqr
@@ -166,7 +164,7 @@ def ocsvm_online(nu_oc=0.01,minp=50,testing_arr=test_arr,off_scores=scores,obatc
 
         if len(scores_for_ae_min)==mwbatch:
             batch_scores2 = Select_scores(np.array(scores_for_ae_min),per=thres)
-            stat, pval = stats.mannwhitneyu(batch_scores2,normal_scores,alternative='greater')
+            stat, pval = ???
             medval_list.append(np.percentile(scores_for_ae_min, minp))
             if pval>0.05:
                 ae_min = np.percentile(scores_for_ae_min, 50)
